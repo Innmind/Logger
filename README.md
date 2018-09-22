@@ -31,3 +31,5 @@ $fingersCrossed = $logger('error');
 ```
 
 In this example both `$concrete` and `$fingersCrossed` are instances of `Psr\Log\LoggerInterface` with the first one that will write each log to the specified file and to sentry, the latter will only write logs when the `error` level is reached.
+
+If you want to specify the log level for each handler you can do it by adding the `level` query parameter in the handler url.
