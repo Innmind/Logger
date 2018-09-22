@@ -1,0 +1,43 @@
+{
+    "name": "innmind/logger",
+    "type": "library",
+    "description": "Logger",
+    "keywords": ["logger", "psr-3"],
+    "homepage": "http://github.com/Innmind/Logger",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Baptiste Langlade",
+            "email": "langlade.baptiste@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "http://github.com/Innmind/Logger/issues"
+    },
+    "require": {
+        "php": "~7.2",
+        "psr/log": "^1.0",
+        "monolog/monolog": "^1.23",
+        "innmind/url": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Innmind\\Logger\\": "src/"
+        },
+        "files": ["src/bootstrap.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Innmind\\Logger\\": "tests/",
+            "Fixture\\Innmind\\Logger\\": "fixtures/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~7.0",
+        "giorgiosironi/eris": "^0.10.0",
+        "sentry/sentry": "^1.9"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors=always"
+    }
+}
