@@ -12,6 +12,7 @@ use Monolog\Handler\{
     HandlerInterface,
     StreamHandler,
     RavenHandler,
+    NullHandler,
 };
 use Raven_Client as Client;
 
@@ -34,6 +35,9 @@ final class Handler
                     ),
                     $params['level'] ?? 'debug'
                 );
+
+            case 'null':
+                return new NullHandler;
         }
 
         throw new UnknownDSN((string) $dsn);
