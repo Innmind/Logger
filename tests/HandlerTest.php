@@ -12,6 +12,7 @@ use Monolog\Handler\{
     HandlerInterface,
     StreamHandler,
     RavenHandler,
+    NullHandler,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -41,6 +42,7 @@ class HandlerTest extends TestCase
         return [
             ['file:///tmp/log.txt', StreamHandler::class],
             ['sentry://secret@sentry.io/project-id', RavenHandler::class],
+            ['null://', NullHandler::class],
         ];
     }
 }
