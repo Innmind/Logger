@@ -11,9 +11,9 @@ use Innmind\Url\Url;
 use Monolog\Handler\{
     HandlerInterface,
     StreamHandler,
-    RavenHandler,
     NullHandler,
 };
+use Sentry\Monolog\Handler as SentryHandler;
 use PHPUnit\Framework\TestCase;
 
 class HandlerTest extends TestCase
@@ -41,7 +41,7 @@ class HandlerTest extends TestCase
     {
         return [
             ['file:///tmp/log.txt', StreamHandler::class],
-            ['sentry://secret@sentry.io/project-id', RavenHandler::class],
+            ['sentry://secret@sentry.io/project-id', SentryHandler::class],
             ['null://', NullHandler::class],
         ];
     }

@@ -14,6 +14,11 @@ use Monolog\Handler\{
     RavenHandler,
     NullHandler,
 };
+use Sentry\{
+    SentrySdk,
+    Monolog\Handler as SentryHandler,
+};
+use function Sentry\init as sentry;
 use Raven_Client as Client;
 
 final class Handler
@@ -29,10 +34,10 @@ final class Handler
                     $params['level'] ?? 'debug'
                 );
             case 'sentry':
-                return new RavenHandler(
-                    new Client(
-                        (string) $dsn->withScheme(new Scheme('https'))
-                    ),
+                sentry(['dsn' => (string) $dsn->withScheme(new Scheme('https'))]);
+
+                return new SentryHandler(
+                    SentrySdk::getCurrentHub(),
                     $params['level'] ?? 'debug'
                 );
 
