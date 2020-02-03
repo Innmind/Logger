@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Innmind\Logger;
 
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Monolog\{
     Logger,
     Handler\GroupHandler,
@@ -11,7 +11,7 @@ use Monolog\{
 };
 use Psr\Log\LoggerInterface;
 
-function bootstrap(string $name, UrlInterface ...$dsns): callable
+function bootstrap(string $name, Url ...$dsns): callable
 {
     $handlers = array_map([Handler::class, 'make'], $dsns);
 

@@ -23,7 +23,7 @@ class HandlerTest extends TestCase
      */
     public function testMake($dsn, $expected)
     {
-        $handler = Handler::make(Url::fromString($dsn));
+        $handler = Handler::make(Url::of($dsn));
 
         $this->assertInstanceOf(HandlerInterface::class, $handler);
         $this->assertInstanceOf($expected, $handler);
@@ -34,7 +34,7 @@ class HandlerTest extends TestCase
         $this->expectException(UnknownDSN::class);
         $this->expectExceptionMessage('foobar://something');
 
-        Handler::make(Url::fromString('foobar://something'));
+        Handler::make(Url::of('foobar://something'));
     }
 
     public function dsns(): array

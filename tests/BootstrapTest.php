@@ -19,7 +19,7 @@ class BootstrapTest extends TestCase
     {
         $logger = bootstrap(
             'foo',
-            Url::fromString('file:///tmp/log.txt')
+            Url::of('file:///tmp/log.txt')
         );
 
         $this->assertIsCallable($logger);
@@ -28,8 +28,8 @@ class BootstrapTest extends TestCase
 
         $logger = bootstrap(
             'foo',
-            Url::fromString('file:///tmp/log.txt'),
-            Url::fromString('file:///tmp/log2.txt')
+            Url::of('file:///tmp/log.txt'),
+            Url::of('file:///tmp/log2.txt')
         );
         $this->assertIsCallable($logger);
         $this->assertInstanceOf(Logger::class, $logger());

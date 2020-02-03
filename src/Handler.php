@@ -5,7 +5,7 @@ namespace Innmind\Logger;
 
 use Innmind\Logger\Exception\UnknownDSN;
 use Innmind\Url\{
-    UrlInterface,
+    Url,
     Scheme,
 };
 use Monolog\Handler\{
@@ -23,18 +23,18 @@ use Raven_Client as Client;
 
 final class Handler
 {
-    public static function make(UrlInterface $dsn): HandlerInterface
+    public static function make(Url $dsn): HandlerInterface
     {
-        parse_str((string) $dsn->query(), $params);
+        parse_str($dsn->query()->toString(), $params);
 
-        switch ((string) $dsn->scheme()) {
+        switch ($dsn->scheme()->toString()) {
             case 'file':
                 return new StreamHandler(
-                    (string) $dsn->path(),
+                    $dsn->path()->toString(),
                     $params['level'] ?? 'debug'
                 );
             case 'sentry':
-                sentry(['dsn' => (string) $dsn->withScheme(new Scheme('https'))]);
+                sentry(['dsn' => $dsn->withScheme(Scheme::of('https'))->toString()]);
 
                 return new SentryHandler(
                     SentrySdk::getCurrentHub(),
@@ -45,6 +45,6 @@ final class Handler
                 return new NullHandler;
         }
 
-        throw new UnknownDSN((string) $dsn);
+        throw new UnknownDSN($dsn->toString());
     }
 }
