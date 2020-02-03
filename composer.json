@@ -15,7 +15,7 @@
         "issues": "http://github.com/Innmind/Logger/issues"
     },
     "require": {
-        "php": "~7.2",
+        "php": "~7.4",
         "psr/log": "^1.0",
         "monolog/monolog": "~2.0",
         "innmind/url": "^2.0"
