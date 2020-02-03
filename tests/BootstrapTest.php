@@ -19,19 +19,19 @@ class BootstrapTest extends TestCase
     {
         $logger = bootstrap(
             'foo',
-            Url::fromString('file:///tmp/log.txt')
+            Url::of('file:///tmp/log.txt')
         );
 
-        $this->assertInternalType('callable', $logger);
+        $this->assertIsCallable($logger);
         $this->assertInstanceOf(Logger::class, $logger());
         $this->assertInstanceOf(StreamHandler::class, $logger()->popHandler());
 
         $logger = bootstrap(
             'foo',
-            Url::fromString('file:///tmp/log.txt'),
-            Url::fromString('file:///tmp/log2.txt')
+            Url::of('file:///tmp/log.txt'),
+            Url::of('file:///tmp/log2.txt')
         );
-        $this->assertInternalType('callable', $logger);
+        $this->assertIsCallable($logger);
         $this->assertInstanceOf(Logger::class, $logger());
         $this->assertInstanceOf(GroupHandler::class, $logger()->popHandler());
 

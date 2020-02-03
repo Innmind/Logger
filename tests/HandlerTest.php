@@ -3,17 +3,15 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Logger;
 
-use Innmind\Logger\{
-    Handler,
-    Exception\UnknownDSN,
-};
+use function Innmind\Logger\create;
+use Innmind\Logger\Exception\UnknownDSN;
 use Innmind\Url\Url;
 use Monolog\Handler\{
     HandlerInterface,
     StreamHandler,
-    RavenHandler,
     NullHandler,
 };
+use Sentry\Monolog\Handler as SentryHandler;
 use PHPUnit\Framework\TestCase;
 
 class HandlerTest extends TestCase
@@ -23,7 +21,7 @@ class HandlerTest extends TestCase
      */
     public function testMake($dsn, $expected)
     {
-        $handler = Handler::make(Url::fromString($dsn));
+        $handler = create(Url::of($dsn));
 
         $this->assertInstanceOf(HandlerInterface::class, $handler);
         $this->assertInstanceOf($expected, $handler);
@@ -34,14 +32,14 @@ class HandlerTest extends TestCase
         $this->expectException(UnknownDSN::class);
         $this->expectExceptionMessage('foobar://something');
 
-        Handler::make(Url::fromString('foobar://something'));
+        create(Url::of('foobar://something'));
     }
 
     public function dsns(): array
     {
         return [
             ['file:///tmp/log.txt', StreamHandler::class],
-            ['sentry://secret@sentry.io/project-id', RavenHandler::class],
+            ['sentry://secret@sentry.io/project-id', SentryHandler::class],
             ['null://', NullHandler::class],
         ];
     }
