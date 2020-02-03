@@ -25,20 +25,20 @@ final class Handler
 {
     public static function make(Url $dsn): HandlerInterface
     {
-        parse_str($dsn->query()->toString(), $params);
+        \parse_str($dsn->query()->toString(), $params);
 
         switch ($dsn->scheme()->toString()) {
             case 'file':
                 return new StreamHandler(
                     $dsn->path()->toString(),
-                    $params['level'] ?? 'debug'
+                    $params['level'] ?? 'debug',
                 );
             case 'sentry':
                 sentry(['dsn' => $dsn->withScheme(Scheme::of('https'))->toString()]);
 
                 return new SentryHandler(
                     SentrySdk::getCurrentHub(),
-                    $params['level'] ?? 'debug'
+                    $params['level'] ?? 'debug',
                 );
 
             case 'null':

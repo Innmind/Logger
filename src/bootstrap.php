@@ -13,16 +13,16 @@ use Psr\Log\LoggerInterface;
 
 function bootstrap(string $name, Url ...$dsns): callable
 {
-    $handlers = array_map([Handler::class, 'make'], $dsns);
+    $handlers = \array_map([Handler::class, 'make'], $dsns);
 
-    if (count($handlers) === 1) {
+    if (\count($handlers) === 1) {
         $handler = $handlers[0];
     } else {
         $handler = new GroupHandler($handlers);
     }
 
     return static function(string $activationLevel = null) use ($name, $handler): LoggerInterface {
-        if (is_string($activationLevel)) {
+        if (\is_string($activationLevel)) {
             $handler = new FingersCrossedHandler($handler, $activationLevel);
         }
 
