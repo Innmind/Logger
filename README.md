@@ -20,8 +20,8 @@ use Innmind\Url\Url;
 
 $logger = bootstrap(
     'myApp',
-    Url::fromString('file://'.__DIR__.'/var/log.txt'),
-    Url::fromString('sentry://user@sentry.io/project-id')
+    Url::of('file://'.__DIR__.'/var/log.txt'),
+    Url::of('sentry://user@sentry.io/project-id'),
 );
 
 $concrete = $logger();
