@@ -44,20 +44,24 @@ function bootstrap(string $name, Url ...$dsns): callable
 
 function create(Url $dsn): HandlerInterface
 {
+    /** @var array{level?: string} $params */
+    $params = [];
     \parse_str($dsn->query()->toString(), $params);
+    /** @var string $level */
+    $level = $params['level'] ?? 'debug';
 
     switch ($dsn->scheme()->toString()) {
         case 'file':
             return new StreamHandler(
                 $dsn->path()->toString(),
-                $params['level'] ?? 'debug',
+                $level,
             );
         case 'sentry':
             sentry(['dsn' => $dsn->withScheme(Scheme::of('https'))->toString()]);
 
             return new SentryHandler(
                 SentrySdk::getCurrentHub(),
-                $params['level'] ?? 'debug',
+                Logger::toMonologLevel($level),
             );
 
         case 'null':
