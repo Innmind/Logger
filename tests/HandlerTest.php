@@ -3,10 +3,8 @@ declare(strict_types = 1);
 
 namespace Tests\Innmind\Logger;
 
-use Innmind\Logger\{
-    Handler,
-    Exception\UnknownDSN,
-};
+use function Innmind\Logger\create;
+use Innmind\Logger\Exception\UnknownDSN;
 use Innmind\Url\Url;
 use Monolog\Handler\{
     HandlerInterface,
@@ -23,7 +21,7 @@ class HandlerTest extends TestCase
      */
     public function testMake($dsn, $expected)
     {
-        $handler = Handler::make(Url::of($dsn));
+        $handler = create(Url::of($dsn));
 
         $this->assertInstanceOf(HandlerInterface::class, $handler);
         $this->assertInstanceOf($expected, $handler);
@@ -34,7 +32,7 @@ class HandlerTest extends TestCase
         $this->expectException(UnknownDSN::class);
         $this->expectExceptionMessage('foobar://something');
 
-        Handler::make(Url::of('foobar://something'));
+        create(Url::of('foobar://something'));
     }
 
     public function dsns(): array

@@ -3,17 +3,29 @@ declare(strict_types = 1);
 
 namespace Innmind\Logger;
 
-use Innmind\Url\Url;
+use Innmind\Logger\Exception\UnknownDSN;
+use Innmind\Url\{
+    Url,
+    Scheme,
+};
 use Monolog\{
     Logger,
+    Handler\HandlerInterface,
+    Handler\StreamHandler,
+    Handler\NullHandler,
     Handler\GroupHandler,
     Handler\FingersCrossedHandler,
 };
+use Sentry\{
+    SentrySdk,
+    Monolog\Handler as SentryHandler,
+};
+use function Sentry\init as sentry;
 use Psr\Log\LoggerInterface;
 
 function bootstrap(string $name, Url ...$dsns): callable
 {
-    $handlers = \array_map([Handler::class, 'make'], $dsns);
+    $handlers = \array_map('Innmind\Logger\create', $dsns);
 
     if (\count($handlers) === 1) {
         $handler = $handlers[0];
@@ -28,4 +40,29 @@ function bootstrap(string $name, Url ...$dsns): callable
 
         return new Logger($name, [$handler]);
     };
+}
+
+function create(Url $dsn): HandlerInterface
+{
+    \parse_str($dsn->query()->toString(), $params);
+
+    switch ($dsn->scheme()->toString()) {
+        case 'file':
+            return new StreamHandler(
+                $dsn->path()->toString(),
+                $params['level'] ?? 'debug',
+            );
+        case 'sentry':
+            sentry(['dsn' => $dsn->withScheme(Scheme::of('https'))->toString()]);
+
+            return new SentryHandler(
+                SentrySdk::getCurrentHub(),
+                $params['level'] ?? 'debug',
+            );
+
+        case 'null':
+            return new NullHandler;
+    }
+
+    throw new UnknownDSN($dsn->toString());
 }
