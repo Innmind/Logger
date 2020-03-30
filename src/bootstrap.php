@@ -23,6 +23,9 @@ use Sentry\{
 use function Sentry\init as sentry;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @return callable(string = null): LoggerInterface
+ */
 function bootstrap(string $name, Url ...$dsns): callable
 {
     $handlers = \array_map('Innmind\Logger\create', $dsns);
