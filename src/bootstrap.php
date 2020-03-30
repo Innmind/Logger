@@ -23,6 +23,9 @@ use Sentry\{
 use function Sentry\init as sentry;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @return callable(string = null): LoggerInterface
+ */
 function bootstrap(string $name, Url ...$dsns): callable
 {
     $handlers = \array_map('Innmind\Logger\create', $dsns);
@@ -33,8 +36,8 @@ function bootstrap(string $name, Url ...$dsns): callable
         $handler = new GroupHandler($handlers);
     }
 
-    return static function(string $activationLevel = null) use ($name, $handler): LoggerInterface {
-        if (\is_string($activationLevel)) {
+    return static function(string $activationLevel = '') use ($name, $handler): LoggerInterface {
+        if ($activationLevel !== '') {
             $handler = new FingersCrossedHandler($handler, $activationLevel);
         }
 
