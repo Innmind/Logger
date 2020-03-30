@@ -36,8 +36,8 @@ function bootstrap(string $name, Url ...$dsns): callable
         $handler = new GroupHandler($handlers);
     }
 
-    return static function(string $activationLevel = null) use ($name, $handler): LoggerInterface {
-        if (\is_string($activationLevel)) {
+    return static function(string $activationLevel = '') use ($name, $handler): LoggerInterface {
+        if ($activationLevel !== '') {
             $handler = new FingersCrossedHandler($handler, $activationLevel);
         }
 
