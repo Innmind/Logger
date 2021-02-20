@@ -36,6 +36,6 @@
         "phpunit/phpunit": "~8.0",
         "sentry/sentry": "~2.0",
         "php-http/guzzle6-adapter": "^2.0",
-        "vimeo/psalm": "^3.8"
+        "vimeo/psalm": "~4.4"
     }
 }
