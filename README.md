@@ -1,7 +1,7 @@
 # Logger
 
 [![codecov](https://codecov.io/gh/Innmind/Logger/branch/develop/graph/badge.svg)](https://codecov.io/gh/Innmind/Logger)
-[![Build Status](https://github.com/Innmind/Logger/workflows/CI/badge.svg)](https://github.com/Innmind/Logger/actions?query=workflow%3ACI)
+[![Build Status](https://github.com/Innmind/Logger/workflows/CI/badge.svg?branch=master)](https://github.com/Innmind/Logger/actions?query=workflow%3ACI)
 [![Type Coverage](https://shepherd.dev/github/Innmind/Logger/coverage.svg)](https://shepherd.dev/github/Innmind/Logger)
 
 Simple abstraction of monolog to simplify (hopefully) the creation of a logger.
