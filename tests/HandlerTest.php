@@ -39,7 +39,7 @@ class HandlerTest extends TestCase
     {
         return [
             ['file:///tmp/log.txt', StreamHandler::class],
-            ['sentry://secret@sentry.io/project-id', SentryHandler::class],
+            ['sentry://secret@sentry.io/42', SentryHandler::class],
             ['null://', NullHandler::class],
         ];
     }
