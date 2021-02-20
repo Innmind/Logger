@@ -37,8 +37,5 @@
         "sentry/sentry": "~2.0",
         "php-http/guzzle6-adapter": "^2.0",
         "vimeo/psalm": "^3.8"
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit --colors=always"
     }
 }
