@@ -36,6 +36,7 @@
         "phpunit/phpunit": "~9.0",
         "sentry/sentry": "~2.0",
         "php-http/guzzle6-adapter": "^2.0",
-        "vimeo/psalm": "~4.4"
+        "vimeo/psalm": "~4.4",
+        "innmind/coding-standard": "^1.1"
     }
 }
